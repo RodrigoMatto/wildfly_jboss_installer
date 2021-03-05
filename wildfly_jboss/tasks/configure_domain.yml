@@ -8,7 +8,7 @@
   notify:
     - start service
 
-- name: Configure Domain | Copy Slaves XML template to Slaves
+- name: Configure Domain | Copy Slaves XML template to all Slaves
   template:
     src: templates/{{ install }}.host-slave.xml
     dest: "{{ home_directory }}/{{ server_mode }}/configuration/host-slave.xml"
@@ -27,4 +27,7 @@
   when: "inventory_hostname not in lb_server"
   loop: "{{ jdbc_modules }}"
   notify:
-    - restart service
+    - start service
+
+- name: Configure Domain | Run all staged handlers
+  meta: flush_handlers

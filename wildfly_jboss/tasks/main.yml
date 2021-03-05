@@ -3,14 +3,14 @@
 - name: Java | Add specific variables
   include_vars: "java.yml"
 
-- name: Java | Installation
+- name: Java | Add Installation tasks
   include_tasks: "java.yml"
 
 #   Firewall
 - name: Firewall | Add specific variables
   include_vars: "firewall.yml"
 
-- name: Firewall | Configuration
+- name: Firewall | Add Configuration tasks
   include_tasks: "firewall.yml"
 
 #   Wildfly / JBoss EAP | Domain
@@ -22,11 +22,11 @@
   include_vars: "jboss.yml"
   when: install == "jboss"
 
-- name: Wildfly / JBoss EAP | Installation
+- name: Wildfly / JBoss EAP | Add Installation tasks
   include_tasks: "install_domain.yml"
 
-- name: Wildfly / JBoss EAP | Configuration
+- name: Wildfly / JBoss EAP | Add Configuration tasks
   include_tasks: "configure_domain.yml"
 
-- name: Wildfly / JBoss EAP | Apply patches
+- name: Wildfly / JBoss EAP | Add Apply patches tasks
   include_tasks: "apply_patch.yml"
