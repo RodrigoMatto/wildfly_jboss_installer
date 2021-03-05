@@ -2,6 +2,6 @@
 # Variables for Wildfly installation
 system_user: 'wildfly'
 service_name: 'wildfly'
-install_zip:
-home_directory: /opt/wildfly-23.0.0/
+install_zip: 'wildfly-23.0.0.zip'
+home_directory: /opt/wildfly-23/
 initd_directory: /docs/contrib/scripts/init.d/wildfly-init-redhat.sh
