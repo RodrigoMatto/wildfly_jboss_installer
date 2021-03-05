@@ -1,0 +1,32 @@
+---
+#   JAVA
+- name: Java | Add specific variables
+  include_vars: "java.yml"
+
+- name: Java | Installation
+  include_tasks: "java.yml"
+
+#   Firewall
+- name: Firewall | Add specific variables
+  include_vars: "firewall.yml"
+
+- name: Firewall | Configuration
+  include_tasks: "firewall.yml"
+
+#   Wildfly / JBoss EAP | Domain
+- name: Wildfly | Add specific variables
+  include_vars: "wildfly.yml"
+  when: install == "wildfly"
+
+- name: JBoss | Add specific variables
+  include_vars: "jboss.yml"
+  when: install == "jboss"
+
+- name: Wildfly / JBoss EAP | Installation
+  include_tasks: "install_domain.yml"
+
+- name: Wildfly / JBoss EAP | Configuration
+  include_tasks: "configure_domain.yml"
+
+- name: Wildfly / JBoss EAP | Apply patches
+  include_tasks: "apply_patch.yml"

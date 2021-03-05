@@ -1,0 +1,9 @@
+---
+firewall_ports:
+  - {port: '9990/tcp', state: 'enabled'}
+  - {port: '8080/tcp', state: 'enabled'}
+  - {port: '8443/tcp', state: 'enabled'}
+  - {port: '8009/tcp', state: 'enabled'} # ajp
+  - {port: '55200/udp', state: 'enabled'} # jgroups
+  - {port: '45688/udp', state: 'enabled'} # jgroups multicast address
+  - {port: '23364/udp', state: 'enabled'} # mod_cluster

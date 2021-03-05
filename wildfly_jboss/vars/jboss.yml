@@ -1,0 +1,7 @@
+---
+# Variables for Jboss EAP installation
+system_user: 'jboss'
+service_name: 'jboss-eap'
+install_zip:
+home_directory: /opt/Jboss-eap-7.3
+initd_directory: /bin/init.d/jboss-eap-rhel.sh

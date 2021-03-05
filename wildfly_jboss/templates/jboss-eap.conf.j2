@@ -1,0 +1,42 @@
+# General configuration for the init.d scripts,
+# not necessarily for JBoss EAP itself.
+# default location: /etc/default/jboss-eap
+
+## Location of JDK
+ JAVA_HOME="/usr/lib/jvm/default-java"
+
+## Location of JBoss EAP
+ JBOSS_HOME="{{ home_directory }}"
+
+## The username who should own the process.
+ JBOSS_USER={{ system_user }}
+
+## The mode JBoss EAP should start, standalone or domain
+ JBOSS_MODE=domain
+
+## Configuration for standalone mode
+# JBOSS_CONFIG=standalone.xml
+
+## Configuration for domain mode
+ JBOSS_DOMAIN_CONFIG=domain.
+{% if inventory_hostname in master_server %}
+ JBOSS_HOST_CONFIG=host-master.xml
+{% else %}
+ JBOSS_HOST_CONFIG=host-slave.xml
+{% endif %}
+
+## The amount of time to wait for startup
+# STARTUP_WAIT=60
+
+## The amount of time to wait for shutdown
+# SHUTDOWN_WAIT=60
+
+## Location to keep the console log
+ JBOSS_CONSOLE_LOG="/var/log/jboss-eap/console.log"
+
+## Additionals args to include in startup
+{% if inventory_hostname in master_server %}
+ JBOSS_OPTS=" -b {{ ansible_facts.default_ipv4.address }} -Djboss.bind.address.management={{ ansible_facts.default_ipv4.address }} -Djboss.bind.address.private={{ ansible_facts.default_ipv4.address }}"
+{% else %}
+ JBOSS_OPTS=" -b {{ ansible_facts.default_ipv4.address }} -Djboss.bind.address.management={{ ansible_facts.default_ipv4.address }} -Djboss.bind.address.private={{ ansible_facts.default_ipv4.address }} -Djboss.domain.master.address={{ hostvars[master_server].ansible_facts.default_ipv4.address }}"
+{% endif %}

@@ -1,0 +1,16 @@
+---
+- hosts: all
+  vars:
+      install: jboss
+      server_mode: domain
+# Domain configuration
+      master_server:
+        - mastereap7
+      slave_server:
+        - slave01eap7
+        - slave02eap7
+      lb_server:
+        - lbeap7
+  roles:
+    - role: wildfly_jboss
+...

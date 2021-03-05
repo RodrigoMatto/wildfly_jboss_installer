@@ -1,0 +1,20 @@
+---
+- name: Firewall | Start Firewall
+  notify:
+    - start firewall
+
+- name: Firewall | Run all staged handlers
+  meta: flush_handlers
+
+- name: Firewall | Configure firewall
+  firewalld:
+    port: "{{ item.port }}"
+    permanent: yes
+    immediate: yes
+    state: "{{ item.state }}"
+  loop: "{{ firewall_ports }}"
+  notify:
+    - restart firewall
+
+  # must add distinc ports per host
+  # Also add 443 redirect for the load balancer

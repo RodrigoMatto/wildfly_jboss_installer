@@ -1,0 +1,18 @@
+---
+# defaults file for wildfly_jboss_installer
+# Credentials
+admin_username: 'admin'
+admin_password: 'password'
+slave_username: 'slaves'
+slave_password: 'password'
+slave_hash_password: '####'
+
+# Installation
+install_location: "/opt/"
+
+# JDBC Modules
+jdbc_modules:
+    - { name: 'postgres', location: 'org'}
+    - { name: 'microsoft', location: 'com'}
+    - { name: 'ibm', location: 'com'}
+    - { name: 'oracle', location: 'com'}

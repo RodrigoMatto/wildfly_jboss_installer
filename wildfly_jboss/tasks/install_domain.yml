@@ -1,0 +1,40 @@
+---
+- name: Install Domain | Add a System user that runs the {{ install }} process
+  user:
+    name: "{{ system_user }}"
+    state: present
+    system: yes
+
+- name: Install Domain | Copy the zip file to the remote server and unzip
+  unarchive:
+    src: "{{ pkg_location | default('files') }}/{{ install_zip }}"
+    dest: "{{ install_location }}"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+
+- name: Install Domain | Copy the init script to /etc/init.d/
+  copy:
+    src: "{{ home_directory }}{{ initd_directory }}"
+    dest: /etc/init.d/{{ service_name }}
+    mode: 0755
+    remote_src: yes
+
+- name: Install Domain | Copy the {{ install }} config to /etc/default/
+  template:
+    src: templates/{{ service_name }}.conf.j2
+    dest: /etc/default/{{ service_name }}.conf
+  notify:
+    - reload systemd
+
+- name: Install Domain | Add {{ install }} admin user
+  shell: "./add-user.sh -u {{ admin_username }} -p {{ admin_password }} "
+  args:
+    chdir: "{{ home_directory }}/bin/"
+  ignore_errors: yes
+
+- name: Install Domain | Add {{ install }} slave user
+  shell: "./add-user.sh -u {{ slave_username }} -p {{ slave_password }} "
+  args:
+    chdir: "{{ home_directory }}/bin/"
+  ignore_errors: yes
+  when: "inventory_hostname == master_server"
