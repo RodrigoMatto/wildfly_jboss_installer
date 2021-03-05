@@ -5,7 +5,7 @@
     state: present
     system: yes
 
-- name: Install Domain | Copy the zip file to the remote server and unzip
+- name: Install Domain | Copy the zip file to the remote server and unzip it
   unarchive:
     src: "{{ pkg_location | default('files') }}/{{ install_zip }}"
     dest: "{{ install_location }}"
@@ -33,8 +33,11 @@
   ignore_errors: yes
 
 - name: Install Domain | Add {{ install }} slave user
-  shell: "./add-user.sh -u {{ slave_username }} -p {{ slave_password }} "
+  shell: "./add-user.sh -u {{ slave_username }} -p {{ slave_password }} -ds "
   args:
     chdir: "{{ home_directory }}/bin/"
   ignore_errors: yes
   when: "inventory_hostname == master_server"
+
+- name: Install Domain | Run all staged handlers
+  meta: flush_handlers
