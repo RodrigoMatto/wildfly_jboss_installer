@@ -3,7 +3,7 @@
 # default location: /etc/default/jboss-eap
 
 ## Location of JDK
- JAVA_HOME="/usr/lib/jvm/default-java"
+ JAVA_HOME="/etc/alternative/java_sdk_{{ java_version }}"
 
 ## Location of JBoss EAP
  JBOSS_HOME="{{ home_directory }}"
@@ -18,7 +18,7 @@
 # JBOSS_CONFIG=standalone.xml
 
 ## Configuration for domain mode
- JBOSS_DOMAIN_CONFIG=domain.
+ JBOSS_DOMAIN_CONFIG=domain.xml
 {% if inventory_hostname in master_server %}
  JBOSS_HOST_CONFIG=host-master.xml
 {% else %}
