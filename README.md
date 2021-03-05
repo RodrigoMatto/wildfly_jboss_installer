@@ -1,31 +1,47 @@
-Role Name
+Wildfly / JBoss EAP - Installer
 =========
+[![Open Source Love png1](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/) <img alt="Ansible" src="https://img.shields.io/badge/ansible%20-%231A1918.svg?&style=for-the-badge&logo=ansible&logoColor=white"/>
 
-A brief description of the role goes here.
+This role allows you to install either Wildfly or JBoss EAP in domain mode.
 
-Requirements
+Tasks
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+- Install java OpenJDK
+- Install Wildfly/JBoss EAP.
+- Configure Master - Slaves connection,  you can add as many slaves as you want.
+- Configure firewall ports
+- Add Postgres/Microsoft/IBM/Oracle JDBC modules. 
+
+Notice
+------
+
+- This role will NOT configure server groups nor JVM for you. once the roll finished, you will have to create them.
+- This role does not contemplate the creation of two masters (Active/Passive)
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+This role rely on variable heavily so check the following path to assure the proper variable are set, variables are defined in `defaults/main.yml` for global variables and `vars/*.yml` for specific variables, and any variables that can/should be set via parameters to the role.
+The most important variable are set in `install.yml`, since is here where you define your hosts.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Define your hosts Master/Slaves/Lb as follows:
 
-    - hosts: all
-      roles:
-         - { role: username.rolename, x: 42 }
+      - hosts: all
+        vars:
+           install: jboss
+           server_mode: domain
+           master_server: master
+           slave_server:
+           - slave01
+           - slave02
+           lb_server:
+           - lb01
+        roles:
+          - role: wildfly_jboss
 
 License
 -------
