@@ -16,5 +16,5 @@
   notify:
     - restart firewall
 
-  # must add distinc ports per host
+  # Must add distinc ports per host
   # Also add 443 redirect for the load balancer
