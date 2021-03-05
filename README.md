@@ -11,13 +11,14 @@ Tasks
 - Install Wildfly/JBoss EAP.
 - Configure Master - Slaves connection,  you can add as many slaves as you want.
 - Configure firewall ports
-- Add Postgres/Microsoft/IBM/Oracle JDBC modules. 
+- Add Postgres/Microsoft/IBM/Oracle JDBC modules.
 
 Notice
 ------
 
 - This role will NOT configure server groups nor JVM for you. once the roll finished, you will have to create them.
 - This role does not contemplate the creation of two masters (Active/Passive)
+- This role will add JDBC modules but will not register them, do it per profile as you need them.
 
 Role Variables
 --------------
