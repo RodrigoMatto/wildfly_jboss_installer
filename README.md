@@ -16,7 +16,7 @@ Tasks
 Notice
 ------
 
-- This role will NOT configure server groups nor JVM for you. once the roll finished, you will have to create them.
+- This role will NOT configure server groups nor JVM for you. once the role finished, you will have to create them.
 - This role does not contemplate the creation of two masters (Active/Passive)
 - This role will add JDBC modules but will not register them, do it per profile as you need them.
 
@@ -52,4 +52,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+RM
