@@ -12,7 +12,7 @@ install_location: "/opt/"
 
 # JDBC Modules
 jdbc_modules:
-    - { name: 'postgres', location: 'org'}
+    - { name: 'postgresql', location: 'org'}
     - { name: 'microsoft', location: 'com'}
     - { name: 'ibm', location: 'com'}
     - { name: 'oracle', location: 'com'}

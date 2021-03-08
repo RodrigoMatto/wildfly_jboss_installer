@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<module xmlns="urn:jboss:module:1.1" name="com.oracle">
+<module xmlns="urn:jboss:module:1.1" name="org.postgresql">
 
     <resources>
-        <resource-root path="ojdbc6.jar"/>
+        <resource-root path="postgresql-42.2.19.jar"/>
     </resources>
 
     <dependencies>
