@@ -28,7 +28,7 @@ The most important variable are set in `install.yml`, since is here where you de
 
 Example Playbook
 ----------------
-
+Download the Wildfly/Jboss EAP zip files and put them in the `files` directory.
 Define your hosts Master/Slaves/Lb as follows:
 
       - hosts: all
@@ -43,6 +43,9 @@ Define your hosts Master/Slaves/Lb as follows:
            - lb01
         roles:
           - role: wildfly_jboss
+
+Verify/define variables in `defaults/main.yml` and `vars/*.yml`.
+Run `install.yml`.
 
 License
 -------
