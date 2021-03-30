@@ -17,6 +17,3 @@
   loop: "{{ firewall_ports }}"
   notify:
     - restart firewall
-
-  # Must add distinc ports per host
-  # Also add 443 redirect for the load balancer
