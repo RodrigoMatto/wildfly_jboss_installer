@@ -1,7 +1,6 @@
 ---
 - name: Firewall | Start Firewall
-  debug:
-    msg: Verifying firewall sevice state
+  shell: echo 'Verifying firewall sevice state'
   notify:
     - start firewall
 

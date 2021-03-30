@@ -20,10 +20,11 @@
     state: restarted
 
 # Start firewalld
-- name: Start firewall
+- name: start firewall
   systemd:
     name: firewalld
     state: started
+    enabled: yes
 
 # Restart firewalld
 - name: restart firewall
