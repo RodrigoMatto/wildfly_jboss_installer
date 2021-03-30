@@ -5,19 +5,10 @@
     dest: "/tmp/"
     mode: 0644
 
-- name: Apply Patch | Determine if patch can be applied
-  command: "{{ home_directory }}/bin/jboss-cli.sh 'patch info'"
-  become: yes
-  become_user: "{{ system_user }}"
-  register: jboss_patch_info
-  changed_when: no
-
 - name: Apply Patch | Apply JBoss EAP patch
   command: "{{ home_directory }}/bin/jboss-cli.sh 'patch apply /tmp/{{ patch_file | basename }}'"
   become: yes
   become_user: "{{ system_user }}"
-  when:
-    - "'base' in jboss_patch_info.stdout"
   notify: restart service
 
 - name: cleanup
