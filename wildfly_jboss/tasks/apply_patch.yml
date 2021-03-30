@@ -9,7 +9,7 @@
   command: "{{ home_directory }}/bin/jboss-cli.sh 'patch info'"
   become: yes
   become_user: "{{ system_user }}"
-  register: patch_info
+  register: jboss_patch_info
   changed_when: no
 
 - name: Apply Patch | Apply JBoss EAP patch
