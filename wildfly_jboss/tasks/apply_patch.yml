@@ -9,7 +9,9 @@
   command: "{{ home_directory }}/bin/jboss-cli.sh 'patch apply /tmp/{{ patch_file | basename }}'"
   become: yes
   become_user: "{{ system_user }}"
-  notify: restart service
+  ignore_errors: yes
+  notify:
+    - restart service
 
 - name: cleanup
   file:
