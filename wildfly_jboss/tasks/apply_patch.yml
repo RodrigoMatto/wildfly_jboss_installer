@@ -1,7 +1,7 @@
 ---
 - name: Apply Patch | Copy the patch file to /tmp/{{ patch_file | basename }}
   copy:
-    src: "{{ patch_file }}"
+    src: "{{ pkg_location | default('files') }}/{{ patch_file }}"
     dest: "/tmp/"
     mode: 0644
 

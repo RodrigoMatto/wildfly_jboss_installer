@@ -30,3 +30,4 @@
 
 - name: Wildfly / JBoss EAP | Add Apply patches tasks
   include_tasks: "apply_patch.yml"
+  when: install == "jboss"
