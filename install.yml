@@ -11,6 +11,9 @@
       lb_server:
         - lb01eap7
         - lb02eap7
+# Multicast Address
+      default_multicast: "230.0.0.14"
+      modcluster_multicast: "224.0.1.115"
   roles:
     - role: wildfly_jboss
 ...
