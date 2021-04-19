@@ -3,6 +3,8 @@
   user:
     name: "{{ system_user }}"
     state: present
+    create_home: no
+    shell: /usr/sbin/nologin
     system: yes
 
 - name: Install Domain | Copy the zip file to the remote server and unzip it
