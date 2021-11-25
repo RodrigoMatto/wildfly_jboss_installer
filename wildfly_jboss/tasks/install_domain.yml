@@ -41,9 +41,26 @@
   ignore_errors: yes
   when: "inventory_hostname == master_server"
   register: slave_hash_password_out
+  tags:
+    - slave_user
 
-- set_fact:
+- debug:
+    var: slave_hash_password_out
+  when: "inventory_hostname == master_server"
+  tags:
+    - debug
+
+- name: Save hash password
+  set_fact:
     slave_hash_password: "{{ slave_hash_password_out.stdout }}"
+  when: "inventory_hostname == master_server"
+  tags:
+    - slave_user
+
+- debug:
+    var: slave_hash_password
+  tags:
+    - debug
 
 - name: Install Domain | Run all staged handlers
   meta: flush_handlers

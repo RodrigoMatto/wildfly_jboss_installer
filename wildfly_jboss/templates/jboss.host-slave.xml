@@ -10,7 +10,7 @@
         <security-realms>
             <security-realm name="ManagementRealm">
                 <server-identities>
-                    <secret value="{{ slave_hash_password }}"/>
+                    <secret value="{{ hostvars[master_server]['slave_hash_password'] }}"/>
                 </server-identities>
                 <authentication>
                     <local default-user="$local" skip-group-loading="true"/>
