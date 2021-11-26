@@ -13,7 +13,7 @@
   notify:
     - restart service
 
-- name: cleanup
-  file:
-    path: "/tmp/{{ patch_file }}"
-    state: absent
+#- name: cleanup
+#  file:
+#    path: "/tmp/{{ patch_file }}"
+#    state: absent
