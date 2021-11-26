@@ -38,5 +38,5 @@
 {% if inventory_hostname in master_server %}
  JBOSS_OPTS=" -b {{ ansible_facts.fqdn }} -Djboss.bind.address.management={{ ansible_facts.fqdn }} -Djboss.bind.address.private={{ ansible_facts.fqdn }}"
 {% else %}
- JBOSS_OPTS=" -b {{ ansible_facts.fqdn }} -Djboss.bind.address.management={{ ansible_facts.fqdn }} -Djboss.bind.address.private={{ ansible_facts.fqdn }} -Djboss.domain.master.address={{ hostvars[master_server].ansible_facts.fqdn }} -Djboss.default.multicast.address={{ default_multicast | default('230.0.0.4') }} -Djboss.modcluster.multicast.address={{ modcluster_multicast | default('224.0.1.105') }}"
+ JBOSS_OPTS=" -b {{ ansible_facts.fqdn }} -Djboss.bind.address.management={{ ansible_facts.fqdn }} -Djboss.bind.address.private={{ ansible_facts.fqdn }} -Djboss.domain.master.address={{ master_server }} -Djboss.default.multicast.address={{ default_multicast | default('230.0.0.4') }} -Djboss.modcluster.multicast.address={{ modcluster_multicast | default('224.0.1.105') }}"
 {% endif %}
