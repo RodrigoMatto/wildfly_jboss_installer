@@ -3,7 +3,7 @@
 # Credentials
 admin_username: 'admin'
 admin_password: 'password'
-slave_username: 'slaves'
+slave_username: 'slave'
 slave_password: 'password'
 
 # Installation

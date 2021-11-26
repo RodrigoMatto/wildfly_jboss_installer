@@ -1,21 +1,59 @@
 ---
-- name: Configure Domain | Copy Domain XML template to Master
-  template:
-    src: templates/{{ install }}.domain.xml
-    dest: "{{ home_directory }}/{{ server_mode }}/configuration/domain.xml"
-    force: true
+- name: Remove default server-groups from domain.xml
+  xml:
+    path:  "{{ home_directory }}/{{ server_mode }}/configuration/domain.xml"
+    xpath: "{{ item.xpath }}"
+    state: absent
+    namespaces:
+      #x: urn:jboss:domain:16.0 is for JBoss EAP 7.4 # It should be mapped in vars with the JBoss EAP/Wildfly that is being installed
+      x: "{{ xml_namespace }}"
+  loop:
+    - { xpath: "/x:domain/x:server-groups/*" }
   when: "inventory_hostname in master_server"
   notify:
-    - start service
+    - restart service
 
-- name: Configure Domain | Copy Slaves XML template to all Slaves
-  template:
-    src: templates/{{ install }}.host-slave.xml
-    dest: "{{ home_directory }}/{{ server_mode }}/configuration/host-slave.xml"
-    force: true
+- name: Remove default servers from host slave config file
+  xml:
+    path:  "{{ home_directory }}/{{ server_mode }}/configuration/host-slave.xml"
+    xpath: "{{ item.xpath }}"
+    state: absent
+    namespaces:
+      #x: urn:jboss:domain:16.0 is for JBoss EAP 7.4 # It should be mapped in vars with the JBoss EAP/Wildfly that is being installed
+      x: "{{ xml_namespace }}"
+  loop:
+    - { xpath: "/x:host/x:servers/*" }
+  notify:
+    - restart service
+
+- name: Configure the secret in slaves for authentication with master
+  xml:
+    path:  "{{ home_directory }}/{{ server_mode }}/configuration/host-slave.xml"
+    xpath: "{{ item.xpath }}"
+    attribute: "{{ item.attribute }}"
+    value: "{{ item.value }}"
+    namespaces:
+      #x: urn:jboss:domain:16.0 is for JBoss EAP 7.4 # It should be mapped in vars with the JBoss EAP/Wildfly that is being installed
+      x: "{{ xml_namespace }}"
+  loop:
+    - { xpath: "/x:host/x:management/x:security-realms/x:security-realm/x:server-identities/x:secret", attribute: "value", value: "{{ hostvars[master_server]['slave_hash_password'] }}" }
   when: "inventory_hostname not in master_server"
   notify:
-    - start service
+    - restart service
+
+- name: Configure the user in slaves for authentication with master
+  xml:
+    path:  "{{ home_directory }}/{{ server_mode }}/configuration/host-slave.xml"
+    xpath: "{{ item.xpath }}"
+    attribute: "{{ item.attribute }}"
+    value: "{{ item.value }}"
+    namespaces:
+      #x: urn:jboss:domain:16.0 is for JBoss EAP 7.4 # It should be mapped in vars with the JBoss EAP/Wildfly that is being installed
+      x: "{{ xml_namespace }}"
+  loop:
+    - { xpath: "/x:host/x:domain-controller/x:remote", attribute: "username", value: "slave" }
+  notify:
+    - restart service
 
 - name: Configure Domain | Add JDBC module configuration
   copy:
@@ -27,7 +65,7 @@
   when: "inventory_hostname not in lb_server"
   loop: "{{ jdbc_modules }}"
   notify:
-    - start service
+    - restart service
 
 - name: Configure Domain | Run all staged handlers
   meta: flush_handlers
