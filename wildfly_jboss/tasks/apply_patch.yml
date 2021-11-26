@@ -10,8 +10,15 @@
   become: yes
   become_user: "{{ system_user }}"
   ignore_errors: yes
+  register: patch_apply_result
+  changed_when: '"success" in patch_apply_result.stdout'
   notify:
     - restart service
+
+- debug:
+    var: patch_apply_result
+  tags:
+    - debug
 
 #- name: cleanup
 #  file:

@@ -42,6 +42,9 @@
   args:
     chdir: "{{ home_directory }}/bin/"
   ignore_errors: yes
+  register: result
+  failed_when: result.rc != 0
+  changed_when: false
 
 - name: Install Domain | Add {{ install }} slave user
   shell: "./add-user.sh -u {{ slave_username }} -p {{ slave_password }} -ds | grep 'secret value' | cut -d \'\"\' -f 2"
@@ -50,6 +53,8 @@
   ignore_errors: yes
   when: "inventory_hostname == master_server"
   register: slave_hash_password_out
+  failed_when: slave_hash_password_out.rc != 0
+  changed_when: false
   tags:
     - slave_user
 
