@@ -7,12 +7,21 @@
     shell: /usr/sbin/nologin
     system: yes
 
-- name: Install Domain | Copy the zip file to the remote server and unzip it
-  unarchive:
+- name: Install Domain | Copy the installer to remote server
+  copy:
     src: "{{ pkg_location | default('files') }}/{{ install_zip }}"
+    dest: "/tmp/{{ install_zip }}"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+
+- name: Install Domain | Unzip installer
+  unarchive:
+    src: "/tmp/{{ install_zip }}"
+    remote_src: yes
     dest: "{{ install_location }}"
     owner: "{{ system_user }}"
     group: "{{ system_user }}"
+    creates: "{{ install_location }}{{ install_zip[:-6] }}"
 
 - name: Install Domain | Copy the init script to /etc/init.d/
   copy:
@@ -48,7 +57,7 @@
     var: slave_hash_password_out
   when: "inventory_hostname == master_server"
   tags:
-    - debug
+    - slave_user
 
 - name: Save hash password
   set_fact:
@@ -60,7 +69,7 @@
 - debug:
     var: slave_hash_password
   tags:
-    - debug
+    - slave_user
 
 - name: Install Domain | Run all staged handlers
   meta: flush_handlers
