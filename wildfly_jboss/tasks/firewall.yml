@@ -1,11 +1,12 @@
 ---
-- name: Firewall | Start Firewall
-  shell: echo 'Verifying firewall sevice state'
-  notify:
-    - start firewall
-
-- name: Firewall | Run all staged handlers
-  meta: flush_handlers
+# but, why?
+#- name: Firewall | Start Firewall
+#  shell: echo 'Verifying firewall sevice state'
+#  notify:
+#    - restart firewall
+#
+#- name: Firewall | Run all staged handlers
+#  meta: flush_handlers
 
 - name: Firewall | Configure firewall
   firewalld:
