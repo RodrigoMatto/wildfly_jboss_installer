@@ -18,6 +18,7 @@
   systemd:
     name: "{{ service_name }}"
     state: restarted
+    enabled: yes
 
 ## Start firewalld
 #- name: start firewall
@@ -31,3 +32,5 @@
   systemd:
     name: firewalld
     state: restarted
+    enabled: yes
+
