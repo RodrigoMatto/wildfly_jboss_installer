@@ -3,9 +3,8 @@
 # Credentials
 admin_username: 'admin'
 admin_password: 'password'
-slave_username: 'slaves'
+slave_username: 'slave'
 slave_password: 'password'
-slave_hash_password: 'cGFzc3dvcmQ='
 
 # Installation
 install_location: "/opt/"

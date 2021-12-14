@@ -10,10 +10,17 @@
   become: yes
   become_user: "{{ system_user }}"
   ignore_errors: yes
+  register: patch_apply_result
+  changed_when: '"success" in patch_apply_result.stdout'
   notify:
     - restart service
 
-- name: cleanup
-  file:
-    path: "/tmp/{{ patch_file }}"
-    state: absent
+- debug:
+    var: patch_apply_result
+  tags:
+    - debug
+
+#- name: cleanup
+#  file:
+#    path: "/tmp/{{ patch_file }}"
+#    state: absent

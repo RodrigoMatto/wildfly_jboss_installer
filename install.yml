@@ -1,19 +1,22 @@
 ---
-- hosts: all
+#This is an example tested with EAP 7.4
+- hosts: master:slaves
   vars:
       install: jboss
       server_mode: domain
-# Domain configuration
-      master_server: mastereap7
-      slave_server:
-        - slave01eap7
-        - slave02eap7
-      lb_server:
-        - lb01eap7
-        - lb02eap7
-# Multicast Address
+
+      # Domain configuration
+      master_server: master.datasystems.com.py
+      slave_server: app
+      lb_server: balancer
+
+      # Multicast Address
       default_multicast: "230.0.0.14"
       modcluster_multicast: "224.0.1.115"
+
+      #Security
+      slave_password: slavepassword
+
   roles:
-    - role: wildfly_jboss
+    - wildfly_jboss
 ...
