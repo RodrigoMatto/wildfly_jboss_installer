@@ -23,7 +23,7 @@
   notify:
     - restart firewall
 
-- name: Add igmp protocol to allow (correctly) all multicast traffic
+- name: Firewall | Add igmp protocol to allow (correctly) all multicast traffic
   shell:
     cmd: firewall-cmd --add-protocol=igmp --permanent 
   register: igmp_result
@@ -31,6 +31,6 @@
   notify:
     - restart firewall
 
-- name: Debug igmp result
+- name: Firewall | Debug igmp result
   debug:
     var: igmp_result
