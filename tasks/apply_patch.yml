@@ -1,0 +1,26 @@
+---
+- name: Apply Patch | Copy the patch file to /tmp/{{ patch_file | basename }}
+  copy:
+    src: "{{ pkg_location | default('files') }}/{{ patch_file }}"
+    dest: "/tmp/"
+    mode: 0644
+
+- name: Apply Patch | Apply JBoss EAP patch
+  command: "{{ home_directory }}/bin/jboss-cli.sh 'patch apply /tmp/{{ patch_file | basename }}'"
+  become: yes
+  become_user: "{{ system_user }}"
+  ignore_errors: yes
+  register: patch_apply_result
+  changed_when: '"success" in patch_apply_result.stdout'
+  notify:
+    - restart service
+
+- debug:
+    var: patch_apply_result
+  tags:
+    - debug
+
+#- name: cleanup
+#  file:
+#    path: "/tmp/{{ patch_file }}"
+#    state: absent

@@ -1,9 +1,0 @@
----
-# Variables for Jboss EAP installation
-system_user: 'jboss'
-service_name: 'jboss-eap'
-install_zip: 'jboss-eap-7.4.0.zip'
-patch_file: 'jboss-eap-7.4.2-patch.zip'
-xml_namespace: 'urn:jboss:domain:16.0'
-home_directory: /opt/jboss-eap-7.4
-initd_directory: /bin/init.d/jboss-eap-rhel.sh

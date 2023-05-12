@@ -1,5 +1,0 @@
----
-- name: Java | {{ java_task }} Java {{ java_version }} {{ java_state }}
-  yum:
-    name: "java-{{ java_version }}-openjdk-{{ java_type }}"
-    state: "{{ java_state }}"
