@@ -1,5 +1,0 @@
----
-java_task: Install
-java_version: 1.8.0        # 1.8.0 OR 11
-java_type: devel
-java_state: present

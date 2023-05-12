@@ -1,0 +1,46 @@
+---
+#- name: Firewall | Start Firewall
+#  shell: echo 'Verifying firewall sevice is up'
+#  notify:
+#    - start firewall
+
+#- name: Firewall | Run all staged handlers
+#  meta: flush_handlers
+
+# But, why? Firewalld must be up to run module firewalld
+- name: Firewall | Start Firewall
+  service:
+    name: firewalld
+    state: started
+
+- name: Firewall | Configure firewall ports
+  firewalld:
+    port: "{{ item.port }}"
+    permanent: yes
+    immediate: yes
+    state: "{{ item.state }}"
+  loop: "{{ firewall_ports }}"
+  notify:
+    - restart firewall
+
+- name: Firewall | Configure firewall services
+  firewalld:
+    service: "{{ item.name }}"
+    permanent: yes
+    immediate: yes
+    state: "{{ item.state }}"
+  loop: "{{ firewall_services }}"
+  notify:
+    - restart firewall
+
+- name: Firewall | Add igmp protocol to allow (correctly) all multicast traffic
+  shell:
+    cmd: firewall-cmd --add-protocol=igmp --permanent 
+  register: igmp_result
+  changed_when: '"ALREADY_ENABLED" not in igmp_result.stderr'
+  notify:
+    - restart firewall
+
+- name: Firewall | Debug igmp result
+  debug:
+    var: igmp_result

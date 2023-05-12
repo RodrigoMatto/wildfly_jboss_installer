@@ -1,0 +1,17 @@
+---
+# defaults file for wildfly_jboss_installer
+# Credentials
+admin_username: 'admin'
+admin_password: 'redhat'
+slave_username: 'slave'
+slave_password: 'redhat'
+
+# Installation
+install_location: "/opt/"
+
+# JDBC Modules
+jdbc_modules:
+    - { name: 'postgresql', location: 'org'}
+    - { name: 'microsoft', location: 'com'}
+    - { name: 'ibm', location: 'com'}
+    - { name: 'oracle', location: 'com'}
